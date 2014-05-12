@@ -13,6 +13,12 @@ namespace pomodoro
 {
     public partial class MainWindow : Form
     {
+
+        // TODO: Form validálás: 
+        // http://msdn.microsoft.com/en-us/library/bbabas53(v=vs.110).aspx
+        // http://msdn.microsoft.com/en-us/library/kkx4h3az(v=vs.110).aspx
+        // http://msdn.microsoft.com/en-us/library/8aye673k(v=vs.110).aspx
+
         private DateTime startCounterAt;
 
         public DateTime StartCounterAt
@@ -100,6 +106,17 @@ namespace pomodoro
             this.bStart.Enabled = true;
             MessageBox.Show("Game over!");
             this.tBCounter.Text = "25:00";
+        }
+
+        private void bLogs_Click(object sender, EventArgs e)
+        {
+            var logWindow = new LogWindow();
+            logWindow.Show();
+        }
+
+        private void bSave_Click(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
     }
