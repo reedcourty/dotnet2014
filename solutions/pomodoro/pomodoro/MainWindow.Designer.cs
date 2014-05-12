@@ -50,7 +50,7 @@
             this.tLPCounter.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
             this.tLPCounter.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
             this.tLPCounter.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 8F));
-            this.tLPCounter.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 93F));
+            this.tLPCounter.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 95F));
             this.tLPCounter.Controls.Add(this.tBCounter, 0, 0);
             this.tLPCounter.Controls.Add(this.bStart, 4, 0);
             this.tLPCounter.Location = new System.Drawing.Point(12, 12);
@@ -69,7 +69,7 @@
             this.tBCounter.Font = new System.Drawing.Font("Microsoft Sans Serif", 28F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.tBCounter.Location = new System.Drawing.Point(3, 3);
             this.tBCounter.Name = "tBCounter";
-            this.tBCounter.Size = new System.Drawing.Size(150, 50);
+            this.tBCounter.Size = new System.Drawing.Size(149, 50);
             this.tBCounter.TabIndex = 1;
             this.tBCounter.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -78,10 +78,10 @@
             this.bStart.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.bStart.Location = new System.Drawing.Point(174, 10);
+            this.bStart.Location = new System.Drawing.Point(173, 10);
             this.bStart.Margin = new System.Windows.Forms.Padding(10);
             this.bStart.Name = "bStart";
-            this.bStart.Size = new System.Drawing.Size(75, 37);
+            this.bStart.Size = new System.Drawing.Size(76, 37);
             this.bStart.TabIndex = 1;
             this.bStart.Text = "Start";
             this.bStart.UseVisualStyleBackColor = true;
@@ -101,6 +101,7 @@
             this.tBDescription.Location = new System.Drawing.Point(3, 20);
             this.tBDescription.Multiline = true;
             this.tBDescription.Name = "tBDescription";
+            this.tBDescription.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.tBDescription.Size = new System.Drawing.Size(397, 88);
             this.tBDescription.TabIndex = 1;
             // 
@@ -146,9 +147,9 @@
             this.bSave.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.bSave.Location = new System.Drawing.Point(314, 159);
+            this.bSave.Location = new System.Drawing.Point(313, 159);
             this.bSave.Name = "bSave";
-            this.bSave.Size = new System.Drawing.Size(86, 22);
+            this.bSave.Size = new System.Drawing.Size(87, 22);
             this.bSave.TabIndex = 5;
             this.bSave.Text = "Save";
             this.bSave.UseVisualStyleBackColor = true;
@@ -159,7 +160,7 @@
             this.tLPEntry.ColumnCount = 3;
             this.tLPEntry.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 23.88535F));
             this.tLPEntry.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 76.11465F));
-            this.tLPEntry.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 91F));
+            this.tLPEntry.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 92F));
             this.tLPEntry.Controls.Add(this.lDescription, 0, 0);
             this.tLPEntry.Controls.Add(this.bSave, 2, 5);
             this.tLPEntry.Controls.Add(this.tBDescription, 0, 1);

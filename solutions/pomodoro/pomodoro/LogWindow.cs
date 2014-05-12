@@ -31,5 +31,20 @@ namespace pomodoro
             this.entryTableAdapter.Fill(this.pomodoroDataSet.Entry);
 
         }
+
+        private void entryIDTextBox_TextChanged(object sender, EventArgs e)
+        {
+            tBTags.Text = String.Format("Ide jönnek a {0} ID-val rendelkező bejegyzés címkéi", entryIDTextBox.Text);
+        }
+
+        private void buttonUpdate_Click(object sender, EventArgs e)
+        {
+            Console.WriteLine("Update...");
+        }
+
+        private void buttonDelete_Click(object sender, EventArgs e)
+        {
+            Console.WriteLine("Delete...");
+        }
     }
 }
