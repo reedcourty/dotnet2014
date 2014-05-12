@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace pomodoro
 {
-    class DataManager
+    public class DataManager
     {
         private string db;
 
@@ -66,6 +66,32 @@ namespace pomodoro
                 {
                     Console.WriteLine(String.Format("{0}: {1}", exception.Source, exception.Message));
                 }
+            }
+        }
+
+        public void addNewEntry(DateTime timestamp, string description)
+        {
+            try
+            {
+                var connectionString = String.Format("Data Source={0};Version=3;", DB);
+                using (var conn = new SQLiteConnection(connectionString))
+                {
+                    conn.Open();
+                    using (var cmd = conn.CreateCommand())
+                    {
+                        cmd.CommandText = String.Format(@"INSERT INTO Entry (Timestamp, Description) VALUES ('{0}', '{1}')", timestamp.ToString("yyyy-MM-dd HH:mm:ss"), description);
+                        cmd.CommandType = CommandType.Text;
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (System.IO.IOException exception)
+            {
+                Console.WriteLine(String.Format("{0}: {1}", exception.Source, exception.Message));
+            }
+            catch (System.Data.SQLite.SQLiteException exception)
+            {
+                Console.WriteLine(String.Format("{0}: {1}", exception.Source, exception.Message));
             }
         }
     }

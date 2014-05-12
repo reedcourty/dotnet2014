@@ -19,6 +19,8 @@ namespace pomodoro
         // http://msdn.microsoft.com/en-us/library/kkx4h3az(v=vs.110).aspx
         // http://msdn.microsoft.com/en-us/library/8aye673k(v=vs.110).aspx
 
+        public DataManager dataManager;
+
         private DateTime startCounterAt;
 
         public DateTime StartCounterAt
@@ -38,15 +40,32 @@ namespace pomodoro
         public delegate void Updater(string newValue);
         public Updater myUpdater;
 
-        public MainWindow()
+        public MainWindow(DataManager dataManager)
         {
             InitializeComponent();
             myUpdater = new Updater(Update_tBCounter_Text);
+
+            this.dataManager = dataManager;
+        }
+
+        private void DisableEntryEditor()
+        {
+            tBDescription.Enabled = false;
+            tBTags.Enabled = false;
+            bSave.Enabled = false;
+        }
+
+        private void EnableEntryEditor()
+        {
+            tBDescription.Enabled = true;
+            tBTags.Enabled = true;
+            bSave.Enabled = true;
         }
 
         private void MainWindow_Load(object sender, EventArgs e)
         {
             tBCounter.Text = "25:00";
+            DisableEntryEditor();
         }
 
         private void bStart_Click(object sender, EventArgs e)
@@ -69,6 +88,10 @@ namespace pomodoro
             this.StopCounterAt = StartCounterAt.Add(time);
 
             this.bStart.Enabled = false;
+
+            tBDescription.Text = "What have you done?";
+
+            EnableEntryEditor();
 
             bWCounter.RunWorkerAsync();
 
@@ -116,8 +139,20 @@ namespace pomodoro
 
         private void bSave_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            addNewEntry(startCounterAt, this.tBDescription.Text, this.tBTags.Text);
         }
 
+        private void addNewEntry(DateTime timestamp, string description, string tags)
+        {
+            Console.WriteLine("{0} - {1}", timestamp, description);
+            tags = tags.Replace(" ", string.Empty);
+            Console.WriteLine(tags);
+            foreach (var item in tags.Trim().Split(new Char[] { ',' }))
+            {
+                Console.WriteLine(item);
+            }
+
+            dataManager.addNewEntry(timestamp, description);
+        }
     }
 }
