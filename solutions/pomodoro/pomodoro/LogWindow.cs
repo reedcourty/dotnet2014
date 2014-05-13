@@ -12,9 +12,13 @@ namespace pomodoro
 {
     public partial class LogWindow : Form
     {
-        public LogWindow()
+        public DataManager dataManager;
+
+        public LogWindow(DataManager dataManager)
         {
             InitializeComponent();
+
+            this.dataManager = dataManager;
         }
 
         private void entryBindingNavigatorSaveItem_Click(object sender, EventArgs e)
@@ -44,7 +48,10 @@ namespace pomodoro
 
         private void buttonDelete_Click(object sender, EventArgs e)
         {
-            Console.WriteLine("Delete...");
+            long entryID = long.Parse(entryIDTextBox.Text);
+            dataManager.deleteEntryByID(entryID);
+
+            this.entryTableAdapter.Fill(this.pomodoroDataSet.Entry);
         }
     }
 }
