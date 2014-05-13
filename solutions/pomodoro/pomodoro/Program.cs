@@ -21,7 +21,7 @@ namespace pomodoro
             ConfigManager cm = new ConfigManager();
             cm.Init();
 
-            DataManager dm = new DataManager { DB = cm.Configuration.DbFile };
+            DataManager dm = new DataManager { DB = cm.Configuration.DbFile};
             dm.createDBOrSkip();
 
             Application.EnableVisualStyles();

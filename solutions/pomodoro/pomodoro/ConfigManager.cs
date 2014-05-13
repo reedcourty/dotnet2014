@@ -13,6 +13,14 @@ namespace pomodoro
     public class Config
     {
         private string dbFile;
+        private int sessionLenghtInMin;
+
+        public int SessionLenghtInMin
+        {
+            get { return sessionLenghtInMin; }
+            set { sessionLenghtInMin = value; }
+        }
+        
 
         public string DbFile
         {
@@ -31,6 +39,7 @@ namespace pomodoro
     class ConfigManager
     {
         private string configFile;
+
 
         public string ConfigFile
         {

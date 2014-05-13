@@ -26,14 +26,6 @@ namespace pomodoro
             this.dataFieldsAreSaved = false;
         }
 
-        private void entryBindingNavigatorSaveItem_Click(object sender, EventArgs e)
-        {
-            this.Validate();
-            this.entryBindingSource.EndEdit();
-            this.tableAdapterManager.UpdateAll(this.pomodoroDataSet);
-
-        }
-
         private void LogWindow_Load(object sender, EventArgs e)
         {
             // TODO: This line of code loads data into the 'pomodoroDataSet.Entry' table. You can move, or remove it, as needed.
@@ -85,6 +77,7 @@ namespace pomodoro
 
             dataManager.OptimisticUpdate(entryIDTextBox.Text, oldEntryDescription, oldTags, newEntryDescription, newTagsAsString);
 
+            dataManager.UpdateTags(entryIDTextBox.Text, oldTags, newTagsAsString);
 
             dataFieldsAreSaved = false;
             this.entryTableAdapter.Fill(this.pomodoroDataSet.Entry);

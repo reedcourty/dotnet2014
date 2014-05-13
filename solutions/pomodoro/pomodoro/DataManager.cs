@@ -322,5 +322,24 @@ namespace pomodoro
                 Console.WriteLine(String.Format("{0}: {1}", exception.Source, exception.Message));
             }
         }
+
+        public void UpdateTags(string entryID, string oldTags, string newTagsAsString)
+        {
+            this.deleteTagsByEntryID(long.Parse(entryID));
+
+            newTagsAsString = newTagsAsString.Replace(" ", string.Empty);
+            HashSet<string> tags = new HashSet<string>(newTagsAsString.Split(new Char[] { ',' }));
+            HashSet<string> tagsInDB = this.getTagsAsArray();
+
+            foreach (var item in tags)
+            {
+                if (!tagsInDB.Contains(item))
+                {
+                    this.addNewTag(item);
+                }
+            }
+
+            this.addTagsToEntry(long.Parse(entryID), tags);
+        }
     }
 }
