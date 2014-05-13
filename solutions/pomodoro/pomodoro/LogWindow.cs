@@ -104,16 +104,34 @@ namespace pomodoro
 
         private void buttonExport_Click(object sender, EventArgs e)
         {
-            ExportToXLS();
+            List<List<string>> table = new List<List<string>>();
+
+            foreach (var row in entryDataGridView.Rows)
+            {
+                string id = Convert.ToString((row as DataGridViewRow).Cells[0].Value);
+                string timestamp = (row as DataGridViewRow).Cells[1].Value as string;
+                string description = (row as DataGridViewRow).Cells[2].Value as string;
+
+                List<string> rowAsStringList = new List<string>();
+                
+                rowAsStringList.Add(id);
+                rowAsStringList.Add(timestamp);
+                rowAsStringList.Add(description);
+
+                List<string> tags = dataManager.getTagsByEntry(id);
+
+                rowAsStringList.Add(String.Join(",", tags));
+
+                Console.WriteLine("rowAsStringList: {0}", rowAsStringList.Count);
+
+                table.Add(rowAsStringList);
+            }
+
+            ExportToXLS(table);
         }
 
-        private void ExportToXLS()
+        private void ExportToXLS(List<List<string>> table)
         {
-            string entryID = entryIDTextBox.Text;
-            string entryTimestamp = timestampTextBox.Text;
-            string entryDescription = descriptionTextBox.Text;
-            string tags = tBTags.Text;
-
             object missing = Type.Missing;
 
             Microsoft.Office.Interop.Excel.Application excel = new Microsoft.Office.Interop.Excel.Application();
@@ -125,14 +143,19 @@ namespace pomodoro
             ((Microsoft.Office.Interop.Excel.Range)excel.Cells[1, 3]).Value = "Description";
             ((Microsoft.Office.Interop.Excel.Range)excel.Cells[1, 4]).Value = "Tags";
 
-            ((Microsoft.Office.Interop.Excel.Range)excel.Cells[2, 1]).Value = entryID;
-            ((Microsoft.Office.Interop.Excel.Range)excel.Cells[2, 2]).Value = entryTimestamp;
-            ((Microsoft.Office.Interop.Excel.Range)excel.Cells[2, 3]).Value = entryDescription;
-            ((Microsoft.Office.Interop.Excel.Range)excel.Cells[2, 4]).Value = tags;
+            int index = 1;
+            foreach (var row in table)
+            {
+                ((Microsoft.Office.Interop.Excel.Range)excel.Cells[index, 1]).Value = row[0] as string;
+                ((Microsoft.Office.Interop.Excel.Range)excel.Cells[index, 2]).Value = row[1] as string;
+                ((Microsoft.Office.Interop.Excel.Range)excel.Cells[index, 3]).Value = row[2] as string;
+                ((Microsoft.Office.Interop.Excel.Range)excel.Cells[index, 4]).Value = row[3] as string;
+
+                index++;
+            }
 
             wb.SaveAs(@"c:\Users\reedcourty\export.xlsx", missing, missing, missing, missing, missing, Microsoft.Office.Interop.Excel.XlSaveAsAccessMode.xlNoChange, missing, missing, missing, missing);
             excel.Quit();
-
         }
     }
 }
