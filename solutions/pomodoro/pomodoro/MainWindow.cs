@@ -114,7 +114,7 @@ namespace pomodoro
                 {
                     running = false;
                 }
-                
+
             }
 
         }
@@ -142,17 +142,22 @@ namespace pomodoro
             addNewEntry(startCounterAt, this.tBDescription.Text, this.tBTags.Text);
         }
 
-        private void addNewEntry(DateTime timestamp, string description, string tags)
+        private void addNewEntry(DateTime timestamp, string description, string tagsString)
         {
-            Console.WriteLine("{0} - {1}", timestamp, description);
-            tags = tags.Replace(" ", string.Empty);
-            Console.WriteLine(tags);
-            foreach (var item in tags.Trim().Split(new Char[] { ',' }))
+            tagsString = tagsString.Replace(" ", string.Empty);
+            HashSet<string> tags = new HashSet<string>(tagsString.Split(new Char[] { ',' }));
+            HashSet<string> tagsInDB = dataManager.getTagsAsArray();
+
+            foreach (var item in tags)
             {
-                Console.WriteLine(item);
+                if (!tagsInDB.Contains(item)) {
+                    dataManager.addNewTag(item);
+                }
             }
 
-            dataManager.addNewEntry(timestamp, description);
+            long newEntryID = dataManager.addNewEntry(timestamp, description);
+
+            dataManager.addTagsToEntry(newEntryID, tags);
         }
     }
 }

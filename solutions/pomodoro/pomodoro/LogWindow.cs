@@ -38,7 +38,23 @@ namespace pomodoro
 
         private void entryIDTextBox_TextChanged(object sender, EventArgs e)
         {
-            tBTags.Text = String.Format("Ide jönnek a {0} ID-val rendelkező bejegyzés címkéi", entryIDTextBox.Text);
+            List<string> tags = dataManager.getTagsByEntry(entryIDTextBox.Text);
+
+            string tagsString = "";
+
+            foreach (var item in tags)
+            {
+                tagsString = tagsString + item + ", ";
+            }
+
+            if (tagsString.Length > 0)
+            {
+                tBTags.Text = tagsString.Remove(tagsString.Length - 2);
+            }
+            else
+            {
+                tBTags.Text = tagsString;
+            }
         }
 
         private void buttonUpdate_Click(object sender, EventArgs e)
@@ -50,6 +66,7 @@ namespace pomodoro
         {
             long entryID = long.Parse(entryIDTextBox.Text);
             dataManager.deleteEntryByID(entryID);
+            dataManager.deleteTagsByEntryID(entryID);
 
             this.entryTableAdapter.Fill(this.pomodoroDataSet.Entry);
         }
