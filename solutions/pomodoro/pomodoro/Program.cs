@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -14,12 +16,13 @@ namespace pomodoro
         [STAThread]
         static void Main()
         {
-            // TODO: Adatbázis létrehozása első indításkor, config fájl alapján
-
             // Init:
+            Tracer tracer = new Tracer();
+            
+            tracer.PutEvent(TraceEventType.Information, 1, "Pomodoro has been started...");
 
-            ConfigManager cm = new ConfigManager();
-            cm.Init();
+            ConfigManager cm = new ConfigManager(tracer);
+            //cm.Init();
 
             DataManager dm = new DataManager { DB = cm.Configuration.DbFile};
             dm.createDBOrSkip();
@@ -27,11 +30,8 @@ namespace pomodoro
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainWindow(dm));
-        }
 
-        // TODO: Beállítások létrehozása, exportálása első indításkor
-        // TODO: Beállítások beolvasása
-        
-        // TODO: Napló exportálása XLS-be
+            tracer.Close();
+        }  
     }
 }

@@ -39,7 +39,7 @@ namespace pomodoro
     class ConfigManager
     {
         private string configFile;
-
+        public Tracer tracer;
 
         public string ConfigFile
         {
@@ -55,13 +55,15 @@ namespace pomodoro
             set { configuration = value; }
         }
 
-        public ConfigManager()
+        public ConfigManager(Tracer tracer)
         {
+            this.tracer = tracer;
             Init();
         }
 
         public void LoadConfig()
         {
+            tracer.PutEvent(TraceEventType.Information, 1, "ConfigManager.LoadConfig() has been started");
             Config result = new Config();
             try
             {
