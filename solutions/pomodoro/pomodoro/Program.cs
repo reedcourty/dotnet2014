@@ -17,7 +17,11 @@ namespace pomodoro
             // TODO: Adatbázis létrehozása első indításkor, config fájl alapján
 
             // Init:
-            DataManager dm = new DataManager { DB = "pomodoro.db" };
+
+            ConfigManager cm = new ConfigManager();
+            cm.Init();
+
+            DataManager dm = new DataManager { DB = cm.Configuration.DbFile };
             dm.createDBOrSkip();
 
             Application.EnableVisualStyles();
