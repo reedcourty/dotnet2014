@@ -41,18 +41,19 @@
             this.entryBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.pomodoroDataSet = new pomodoro.pomodoroDataSet();
             this.tLPDetails = new System.Windows.Forms.TableLayoutPanel();
-            this.entryTableAdapter = new pomodoro.pomodoroDataSetTableAdapters.EntryTableAdapter();
-            this.tableAdapterManager = new pomodoro.pomodoroDataSetTableAdapters.TableAdapterManager();
             this.panel1 = new System.Windows.Forms.Panel();
             this.entryIDTextBox = new System.Windows.Forms.TextBox();
             this.timestampTextBox = new System.Windows.Forms.TextBox();
             this.descriptionTextBox = new System.Windows.Forms.TextBox();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
             this.tBTags = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.buttonUpdate = new System.Windows.Forms.Button();
             this.buttonDelete = new System.Windows.Forms.Button();
+            this.entryTableAdapter = new pomodoro.pomodoroDataSetTableAdapters.EntryTableAdapter();
+            this.tableAdapterManager = new pomodoro.pomodoroDataSetTableAdapters.TableAdapterManager();
+            this.buttonExport = new System.Windows.Forms.Button();
             entryIDLabel = new System.Windows.Forms.Label();
             timestampLabel = new System.Windows.Forms.Label();
             descriptionLabel = new System.Windows.Forms.Label();
@@ -66,6 +67,33 @@
             this.panel2.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // entryIDLabel
+            // 
+            entryIDLabel.AutoSize = true;
+            entryIDLabel.Location = new System.Drawing.Point(3, 9);
+            entryIDLabel.Name = "entryIDLabel";
+            entryIDLabel.Size = new System.Drawing.Size(48, 13);
+            entryIDLabel.TabIndex = 0;
+            entryIDLabel.Text = "Entry ID:";
+            // 
+            // timestampLabel
+            // 
+            timestampLabel.AutoSize = true;
+            timestampLabel.Location = new System.Drawing.Point(146, 9);
+            timestampLabel.Name = "timestampLabel";
+            timestampLabel.Size = new System.Drawing.Size(61, 13);
+            timestampLabel.TabIndex = 2;
+            timestampLabel.Text = "Timestamp:";
+            // 
+            // descriptionLabel
+            // 
+            descriptionLabel.AutoSize = true;
+            descriptionLabel.Location = new System.Drawing.Point(3, 33);
+            descriptionLabel.Name = "descriptionLabel";
+            descriptionLabel.Size = new System.Drawing.Size(63, 13);
+            descriptionLabel.TabIndex = 4;
+            descriptionLabel.Text = "Description:";
             // 
             // tLPMain
             // 
@@ -168,6 +196,7 @@
             this.tLPDetails.Controls.Add(this.panel1, 0, 0);
             this.tLPDetails.Controls.Add(this.panel2, 0, 1);
             this.tLPDetails.Controls.Add(this.tableLayoutPanel1, 1, 0);
+            this.tLPDetails.Controls.Add(this.buttonExport, 1, 1);
             this.tLPDetails.Location = new System.Drawing.Point(3, 222);
             this.tLPDetails.Name = "tLPDetails";
             this.tLPDetails.RowCount = 2;
@@ -177,18 +206,6 @@
             this.tLPDetails.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tLPDetails.Size = new System.Drawing.Size(774, 213);
             this.tLPDetails.TabIndex = 1;
-            // 
-            // entryTableAdapter
-            // 
-            this.entryTableAdapter.ClearBeforeFill = true;
-            // 
-            // tableAdapterManager
-            // 
-            this.tableAdapterManager.BackupDataSetBeforeUpdate = false;
-            this.tableAdapterManager.Entry_TagTableAdapter = null;
-            this.tableAdapterManager.EntryTableAdapter = this.entryTableAdapter;
-            this.tableAdapterManager.TagTableAdapter = null;
-            this.tableAdapterManager.UpdateOrder = pomodoro.pomodoroDataSetTableAdapters.TableAdapterManager.UpdateOrderOption.InsertUpdateDelete;
             // 
             // panel1
             // 
@@ -203,15 +220,6 @@
             this.panel1.Size = new System.Drawing.Size(381, 141);
             this.panel1.TabIndex = 0;
             // 
-            // entryIDLabel
-            // 
-            entryIDLabel.AutoSize = true;
-            entryIDLabel.Location = new System.Drawing.Point(3, 9);
-            entryIDLabel.Name = "entryIDLabel";
-            entryIDLabel.Size = new System.Drawing.Size(48, 13);
-            entryIDLabel.TabIndex = 0;
-            entryIDLabel.Text = "Entry ID:";
-            // 
             // entryIDTextBox
             // 
             this.entryIDTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.entryBindingSource, "EntryID", true));
@@ -222,15 +230,6 @@
             this.entryIDTextBox.TabIndex = 1;
             this.entryIDTextBox.TextChanged += new System.EventHandler(this.entryIDTextBox_TextChanged);
             // 
-            // timestampLabel
-            // 
-            timestampLabel.AutoSize = true;
-            timestampLabel.Location = new System.Drawing.Point(146, 9);
-            timestampLabel.Name = "timestampLabel";
-            timestampLabel.Size = new System.Drawing.Size(61, 13);
-            timestampLabel.TabIndex = 2;
-            timestampLabel.Text = "Timestamp:";
-            // 
             // timestampTextBox
             // 
             this.timestampTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.entryBindingSource, "Timestamp", true));
@@ -239,15 +238,6 @@
             this.timestampTextBox.ReadOnly = true;
             this.timestampTextBox.Size = new System.Drawing.Size(165, 20);
             this.timestampTextBox.TabIndex = 3;
-            // 
-            // descriptionLabel
-            // 
-            descriptionLabel.AutoSize = true;
-            descriptionLabel.Location = new System.Drawing.Point(3, 33);
-            descriptionLabel.Name = "descriptionLabel";
-            descriptionLabel.Size = new System.Drawing.Size(63, 13);
-            descriptionLabel.TabIndex = 4;
-            descriptionLabel.Text = "Description:";
             // 
             // descriptionTextBox
             // 
@@ -258,6 +248,7 @@
             this.descriptionTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.descriptionTextBox.Size = new System.Drawing.Size(306, 105);
             this.descriptionTextBox.TabIndex = 5;
+            this.descriptionTextBox.Enter += new System.EventHandler(this.descriptionTextBox_Enter);
             // 
             // panel2
             // 
@@ -268,15 +259,6 @@
             this.panel2.Size = new System.Drawing.Size(381, 57);
             this.panel2.TabIndex = 1;
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 4);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(34, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Tags:";
-            // 
             // tBTags
             // 
             this.tBTags.Location = new System.Drawing.Point(72, 0);
@@ -285,6 +267,16 @@
             this.tBTags.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.tBTags.Size = new System.Drawing.Size(306, 54);
             this.tBTags.TabIndex = 1;
+            this.tBTags.Enter += new System.EventHandler(this.tBTags_Enter);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 4);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(34, 13);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Tags:";
             // 
             // tableLayoutPanel1
             // 
@@ -331,12 +323,40 @@
             this.buttonDelete.UseVisualStyleBackColor = true;
             this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click);
             // 
+            // entryTableAdapter
+            // 
+            this.entryTableAdapter.ClearBeforeFill = true;
+            // 
+            // tableAdapterManager
+            // 
+            this.tableAdapterManager.BackupDataSetBeforeUpdate = false;
+            this.tableAdapterManager.Entry_TagTableAdapter = null;
+            this.tableAdapterManager.EntryTableAdapter = this.entryTableAdapter;
+            this.tableAdapterManager.TagTableAdapter = null;
+            this.tableAdapterManager.UpdateOrder = pomodoro.pomodoroDataSetTableAdapters.TableAdapterManager.UpdateOrderOption.InsertUpdateDelete;
+            // 
+            // buttonExport
+            // 
+            this.buttonExport.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonExport.Location = new System.Drawing.Point(487, 165);
+            this.buttonExport.Margin = new System.Windows.Forms.Padding(100, 15, 100, 15);
+            this.buttonExport.Name = "buttonExport";
+            this.buttonExport.Size = new System.Drawing.Size(187, 33);
+            this.buttonExport.TabIndex = 3;
+            this.buttonExport.Text = "Export";
+            this.buttonExport.UseVisualStyleBackColor = true;
+            this.buttonExport.Click += new System.EventHandler(this.buttonExport_Click);
+            // 
             // LogWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(804, 462);
             this.Controls.Add(this.tLPMain);
+            this.MaximumSize = new System.Drawing.Size(820, 501);
+            this.MinimumSize = new System.Drawing.Size(820, 501);
             this.Name = "LogWindow";
             this.Text = "LogWindow";
             this.Load += new System.EventHandler(this.LogWindow_Load);
@@ -378,5 +398,6 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Button buttonUpdate;
         private System.Windows.Forms.Button buttonDelete;
+        private System.Windows.Forms.Button buttonExport;
     }
 }

@@ -269,7 +269,7 @@ namespace pomodoro
             return result;
         }
 
-        internal void deleteTagsByEntryID(long entryID)
+        public void deleteTagsByEntryID(long entryID)
         {
             try
             {
@@ -281,6 +281,33 @@ namespace pomodoro
                     {
                         // Documentation: SQLite - DELETE http://www.sqlite.org/lang_delete.html
                         cmd.CommandText = String.Format(@"DELETE FROM Entry_Tag WHERE EntryID = {0}", entryID);
+                        cmd.CommandType = CommandType.Text;
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (System.IO.IOException exception)
+            {
+                Console.WriteLine(String.Format("{0}: {1}", exception.Source, exception.Message));
+            }
+            catch (System.Data.SQLite.SQLiteException exception)
+            {
+                Console.WriteLine(String.Format("{0}: {1}", exception.Source, exception.Message));
+            }
+        }
+
+        public void OptimisticUpdate(string entryID, string oldEntryDescription, string oldTags, string newEntryDescription, string newTagsAsString)
+        {
+            try
+            {
+                var connectionString = String.Format("Data Source={0};Version=3;", DB);
+                using (var conn = new SQLiteConnection(connectionString))
+                {
+                    conn.Open();
+                    using (var cmd = conn.CreateCommand())
+                    {
+                        // Documentation: SQLite - UPDATE: http://www.sqlite.org/lang_update.html
+                        cmd.CommandText = String.Format(@"UPDATE Entry SET Description = '{0}' WHERE EntryID = {1} AND Description = '{2}'", newEntryDescription, entryID, oldEntryDescription);
                         cmd.CommandType = CommandType.Text;
                         cmd.ExecuteNonQuery();
                     }
