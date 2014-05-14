@@ -1,24 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
 using System.Data.SQLite;
+using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace pomodoro
 {
     public class DataManager
     {
         private string db;
-
+        
         public string DB
         {
             get { return db; }
             set { db = value; }
         }
+
+        public Tracer tracer;
 
         public void createDBOrSkip()
         {
@@ -91,6 +90,9 @@ namespace pomodoro
                         cmd.Parameters.Add(pDescription);
 
                         cmd.CommandType = CommandType.Text;
+
+                        tracer.PutSQLQuery(cmd, 11);
+
                         cmd.ExecuteNonQuery();
 
                         //cmd.CommandText = String.Format(@"SELECT EntryID FROM Entry WHERE Timestamp = '{0}'", timestamp.ToString("yyyy-MM-dd HH:mm:ss"));
@@ -100,6 +102,9 @@ namespace pomodoro
                         cmd.Parameters.Add(pTimestamp);
                         
                         cmd.CommandType = CommandType.Text;
+
+                        tracer.PutSQLQuery(cmd, 12);
+
                         using (var reader = cmd.ExecuteReader())
                         {
                             while (reader.Read())
@@ -140,6 +145,9 @@ namespace pomodoro
                         cmd.Parameters.Add(pEntryID);
 
                         cmd.CommandType = CommandType.Text;
+
+                        tracer.PutSQLQuery(cmd, 13);
+
                         cmd.ExecuteNonQuery();
                     }
                 }
@@ -168,6 +176,9 @@ namespace pomodoro
                         // Documentation: SQLite - SELECT http://www.sqlite.org/lang_select.html
                         cmd.CommandText = @"SELECT Name FROM Tag";
                         cmd.CommandType = CommandType.Text;
+
+                        tracer.PutSQLQuery(cmd, 15);
+
                         using (var reader = cmd.ExecuteReader())
                         {
                             while (reader.Read())
@@ -209,6 +220,9 @@ namespace pomodoro
                         cmd.Parameters.Add(pTag);
 
                         cmd.CommandType = CommandType.Text;
+
+                        tracer.PutSQLQuery(cmd, 16);
+
                         cmd.ExecuteNonQuery();
                     }
                 }
@@ -248,6 +262,9 @@ namespace pomodoro
                             cmd.Parameters.Add(pItem);
 
                             cmd.CommandType = CommandType.Text;
+
+                            tracer.PutSQLQuery(cmd, 17);
+
                             cmd.ExecuteNonQuery();    
                         }
                         
@@ -284,6 +301,9 @@ namespace pomodoro
                         cmd.Parameters.Add(pEntryID);
                         
                         cmd.CommandType = CommandType.Text;
+
+                        tracer.PutSQLQuery(cmd, 18);
+
                         using (var reader = cmd.ExecuteReader())
                         {
                             while (reader.Read())
@@ -325,6 +345,9 @@ namespace pomodoro
                         cmd.Parameters.Add(pEntryID);
 
                         cmd.CommandType = CommandType.Text;
+
+                        tracer.PutSQLQuery(cmd, 19);
+
                         cmd.ExecuteNonQuery();
                     }
                 }
@@ -361,6 +384,8 @@ namespace pomodoro
                         
                         SQLiteParameter pOldEntryDescription = new SQLiteParameter { ParameterName = "@OldEntryDescription", Value = oldEntryDescription };
                         cmd.Parameters.Add(pOldEntryDescription);
+
+                        tracer.PutSQLQuery(cmd, 1234);
 
                         cmd.CommandType = CommandType.Text;
                         cmd.ExecuteNonQuery();

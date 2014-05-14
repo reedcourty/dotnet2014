@@ -16,6 +16,12 @@ namespace pomodoro
         [STAThread]
         static void Main()
         {
+            // TODO: Performance Counters
+            //      http://msdn.microsoft.com/en-us/library/vstudio/system.diagnostics.performancecounter
+            //      http://msdn.microsoft.com/en-us/library/w8f5kw2e(v=vs.110).aspx
+            //      http://msdn.microsoft.com/en-us/library/9tyc2s04(v=vs.110).aspx
+            //      http://msdn.microsoft.com/en-us/library/w4bz2147(v=vs.110).aspx
+
             // Init:
             Tracer tracer = new Tracer();
             
@@ -23,7 +29,9 @@ namespace pomodoro
 
             ConfigManager cm = new ConfigManager(tracer);
 
-            DataManager dm = new DataManager { DB = cm.Configuration.DbFile};
+            DataManager dm = new DataManager { DB = cm.Configuration.DbFile };
+            dm.tracer = tracer;
+
             dm.createDBOrSkip();
 
             Application.EnableVisualStyles();
