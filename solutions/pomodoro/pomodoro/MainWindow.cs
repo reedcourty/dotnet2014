@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -43,7 +44,7 @@ namespace pomodoro
         public MainWindow(DataManager dataManager)
         {
             InitializeComponent();
-            myUpdater = new Updater(Update_tBCounter_Text);
+            myUpdater = new Updater(Update_maskedTextBoxCounter_Text);
 
             this.dataManager = dataManager;
         }
@@ -64,7 +65,7 @@ namespace pomodoro
 
         private void MainWindow_Load(object sender, EventArgs e)
         {
-            tBCounter.Text = "25:00";
+            maskedTextBoxCounter.Text = "25:00";
             DisableEntryEditor();
         }
 
@@ -73,14 +74,14 @@ namespace pomodoro
             this.StartCounterAt = DateTime.Now;
 
             DateTime parsedTime = DateTime.ParseExact("25:00", "mm:ss", System.Globalization.CultureInfo.InvariantCulture);
-            string timeStringFromCounter = tBCounter.Text;
+            string timeStringFromCounter = maskedTextBoxCounter.Text;
             try
             {
                 parsedTime = DateTime.ParseExact(timeStringFromCounter, "mm:ss", System.Globalization.CultureInfo.InvariantCulture);
             }
             catch (System.FormatException)
             {
-                tBCounter.Text = "25:00";
+                maskedTextBoxCounter.Text = "25:00";
             }
 
             TimeSpan time = new TimeSpan(0, 0, 0, parsedTime.Minute * 60 + parsedTime.Second);
@@ -119,16 +120,16 @@ namespace pomodoro
 
         }
 
-        private void Update_tBCounter_Text(string newValue)
+        private void Update_maskedTextBoxCounter_Text(string newValue)
         {
-            tBCounter.Text = newValue;
+            maskedTextBoxCounter.Text = newValue;
         }
 
         private void bWCounter_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             this.bStart.Enabled = true;
             MessageBox.Show("Game over!");
-            this.tBCounter.Text = "25:00";
+            this.maskedTextBoxCounter.Text = "25:00";
         }
 
         private void bLogs_Click(object sender, EventArgs e)
@@ -159,5 +160,24 @@ namespace pomodoro
 
             dataManager.addTagsToEntry(newEntryID, tags);
         }
+
+        private void tBTags_Validating(object sender, CancelEventArgs e)
+        {
+            string input = (sender as TextBox).Text;
+
+            //Regex r = new Regex("[^A-Z0-9.$ ]$");
+            Regex r = new Regex("[^A-Za-z0-9., ]");
+            if (r.IsMatch(input))
+            {
+                bSave.Enabled = false;
+                (sender as TextBox).BackColor = Color.Salmon;
+            }
+            else
+            {
+                bSave.Enabled = true;
+                (sender as TextBox).BackColor = Color.White;
+            }
+        }
+
     }
 }

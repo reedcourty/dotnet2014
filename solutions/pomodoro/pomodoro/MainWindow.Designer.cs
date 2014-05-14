@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.tLPCounter = new System.Windows.Forms.TableLayoutPanel();
-            this.tBCounter = new System.Windows.Forms.TextBox();
+            this.maskedTextBoxCounter = new System.Windows.Forms.MaskedTextBox();
             this.bStart = new System.Windows.Forms.Button();
             this.bWCounter = new System.ComponentModel.BackgroundWorker();
             this.tBDescription = new System.Windows.Forms.TextBox();
@@ -50,8 +50,8 @@
             this.tLPCounter.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
             this.tLPCounter.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
             this.tLPCounter.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 8F));
-            this.tLPCounter.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 96F));
-            this.tLPCounter.Controls.Add(this.tBCounter, 0, 0);
+            this.tLPCounter.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 99F));
+            this.tLPCounter.Controls.Add(this.maskedTextBoxCounter, 0, 0);
             this.tLPCounter.Controls.Add(this.bStart, 4, 0);
             this.tLPCounter.Location = new System.Drawing.Point(12, 12);
             this.tLPCounter.Name = "tLPCounter";
@@ -60,28 +60,29 @@
             this.tLPCounter.Size = new System.Drawing.Size(259, 57);
             this.tLPCounter.TabIndex = 0;
             // 
-            // tBCounter
+            // maskedTextBoxCounter
             // 
-            this.tBCounter.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.maskedTextBoxCounter.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tLPCounter.SetColumnSpan(this.tBCounter, 3);
-            this.tBCounter.Font = new System.Drawing.Font("Microsoft Sans Serif", 28F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.tBCounter.Location = new System.Drawing.Point(3, 3);
-            this.tBCounter.Name = "tBCounter";
-            this.tBCounter.Size = new System.Drawing.Size(147, 50);
-            this.tBCounter.TabIndex = 1;
-            this.tBCounter.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.tLPCounter.SetColumnSpan(this.maskedTextBoxCounter, 3);
+            this.maskedTextBoxCounter.Font = new System.Drawing.Font("Microsoft Sans Serif", 28F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.maskedTextBoxCounter.Location = new System.Drawing.Point(3, 3);
+            this.maskedTextBoxCounter.Mask = "00:00";
+            this.maskedTextBoxCounter.Name = "maskedTextBoxCounter";
+            this.maskedTextBoxCounter.Size = new System.Drawing.Size(144, 50);
+            this.maskedTextBoxCounter.TabIndex = 8;
+            this.maskedTextBoxCounter.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // bStart
             // 
             this.bStart.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.bStart.Location = new System.Drawing.Point(171, 10);
+            this.bStart.Location = new System.Drawing.Point(168, 10);
             this.bStart.Margin = new System.Windows.Forms.Padding(10);
             this.bStart.Name = "bStart";
-            this.bStart.Size = new System.Drawing.Size(78, 37);
+            this.bStart.Size = new System.Drawing.Size(81, 37);
             this.bStart.TabIndex = 1;
             this.bStart.Text = "Start";
             this.bStart.UseVisualStyleBackColor = true;
@@ -111,10 +112,11 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tLPEntry.SetColumnSpan(this.tBTags, 2);
-            this.tBTags.Location = new System.Drawing.Point(77, 122);
+            this.tBTags.Location = new System.Drawing.Point(76, 122);
             this.tBTags.Name = "tBTags";
-            this.tBTags.Size = new System.Drawing.Size(323, 20);
+            this.tBTags.Size = new System.Drawing.Size(324, 20);
             this.tBTags.TabIndex = 2;
+            this.tBTags.Validating += new System.ComponentModel.CancelEventHandler(this.tBTags_Validating);
             // 
             // lDescription
             // 
@@ -124,7 +126,7 @@
             this.lDescription.AutoSize = true;
             this.lDescription.Location = new System.Drawing.Point(3, 0);
             this.lDescription.Name = "lDescription";
-            this.lDescription.Size = new System.Drawing.Size(68, 17);
+            this.lDescription.Size = new System.Drawing.Size(67, 17);
             this.lDescription.TabIndex = 3;
             this.lDescription.Text = "Description:";
             this.lDescription.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -137,7 +139,7 @@
             this.lTags.AutoSize = true;
             this.lTags.Location = new System.Drawing.Point(3, 119);
             this.lTags.Name = "lTags";
-            this.lTags.Size = new System.Drawing.Size(68, 26);
+            this.lTags.Size = new System.Drawing.Size(67, 26);
             this.lTags.TabIndex = 4;
             this.lTags.Text = "Tags:";
             this.lTags.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -147,9 +149,9 @@
             this.bSave.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.bSave.Location = new System.Drawing.Point(312, 159);
+            this.bSave.Location = new System.Drawing.Point(310, 159);
             this.bSave.Name = "bSave";
-            this.bSave.Size = new System.Drawing.Size(88, 22);
+            this.bSave.Size = new System.Drawing.Size(90, 22);
             this.bSave.TabIndex = 5;
             this.bSave.Text = "Save";
             this.bSave.UseVisualStyleBackColor = true;
@@ -160,7 +162,7 @@
             this.tLPEntry.ColumnCount = 3;
             this.tLPEntry.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 23.88535F));
             this.tLPEntry.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 76.11465F));
-            this.tLPEntry.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 93F));
+            this.tLPEntry.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 95F));
             this.tLPEntry.Controls.Add(this.lDescription, 0, 0);
             this.tLPEntry.Controls.Add(this.bSave, 2, 5);
             this.tLPEntry.Controls.Add(this.tBDescription, 0, 1);
@@ -215,7 +217,6 @@
         #endregion
 
         private System.Windows.Forms.TableLayoutPanel tLPCounter;
-        private System.Windows.Forms.TextBox tBCounter;
         private System.Windows.Forms.Button bStart;
         private System.ComponentModel.BackgroundWorker bWCounter;
         private System.Windows.Forms.TextBox tBDescription;
@@ -225,6 +226,7 @@
         private System.Windows.Forms.Label lTags;
         private System.Windows.Forms.TextBox tBTags;
         private System.Windows.Forms.Button bLogs;
+        private System.Windows.Forms.MaskedTextBox maskedTextBoxCounter;
     }
 }
 

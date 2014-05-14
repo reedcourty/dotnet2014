@@ -51,9 +51,9 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.buttonUpdate = new System.Windows.Forms.Button();
             this.buttonDelete = new System.Windows.Forms.Button();
+            this.buttonExport = new System.Windows.Forms.Button();
             this.entryTableAdapter = new pomodoro.pomodoroDataSetTableAdapters.EntryTableAdapter();
             this.tableAdapterManager = new pomodoro.pomodoroDataSetTableAdapters.TableAdapterManager();
-            this.buttonExport = new System.Windows.Forms.Button();
             entryIDLabel = new System.Windows.Forms.Label();
             timestampLabel = new System.Windows.Forms.Label();
             descriptionLabel = new System.Windows.Forms.Label();
@@ -268,6 +268,7 @@
             this.tBTags.Size = new System.Drawing.Size(306, 54);
             this.tBTags.TabIndex = 1;
             this.tBTags.Enter += new System.EventHandler(this.tBTags_Enter);
+            this.tBTags.Validating += new System.ComponentModel.CancelEventHandler(this.tBTags_Validating);
             // 
             // label1
             // 
@@ -323,18 +324,6 @@
             this.buttonDelete.UseVisualStyleBackColor = true;
             this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click);
             // 
-            // entryTableAdapter
-            // 
-            this.entryTableAdapter.ClearBeforeFill = true;
-            // 
-            // tableAdapterManager
-            // 
-            this.tableAdapterManager.BackupDataSetBeforeUpdate = false;
-            this.tableAdapterManager.Entry_TagTableAdapter = null;
-            this.tableAdapterManager.EntryTableAdapter = this.entryTableAdapter;
-            this.tableAdapterManager.TagTableAdapter = null;
-            this.tableAdapterManager.UpdateOrder = pomodoro.pomodoroDataSetTableAdapters.TableAdapterManager.UpdateOrderOption.InsertUpdateDelete;
-            // 
             // buttonExport
             // 
             this.buttonExport.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -348,6 +337,18 @@
             this.buttonExport.Text = "Export";
             this.buttonExport.UseVisualStyleBackColor = true;
             this.buttonExport.Click += new System.EventHandler(this.buttonExport_Click);
+            // 
+            // entryTableAdapter
+            // 
+            this.entryTableAdapter.ClearBeforeFill = true;
+            // 
+            // tableAdapterManager
+            // 
+            this.tableAdapterManager.BackupDataSetBeforeUpdate = false;
+            this.tableAdapterManager.Entry_TagTableAdapter = null;
+            this.tableAdapterManager.EntryTableAdapter = this.entryTableAdapter;
+            this.tableAdapterManager.TagTableAdapter = null;
+            this.tableAdapterManager.UpdateOrder = pomodoro.pomodoroDataSetTableAdapters.TableAdapterManager.UpdateOrderOption.InsertUpdateDelete;
             // 
             // LogWindow
             // 

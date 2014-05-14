@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -156,6 +157,24 @@ namespace pomodoro
 
             wb.SaveAs(@"c:\Users\reedcourty\export.xlsx", missing, missing, missing, missing, missing, Microsoft.Office.Interop.Excel.XlSaveAsAccessMode.xlNoChange, missing, missing, missing, missing);
             excel.Quit();
+        }
+
+        private void tBTags_Validating(object sender, CancelEventArgs e)
+        {
+            string input = (sender as TextBox).Text;
+
+            //Regex r = new Regex("[^A-Z0-9.$ ]$");
+            Regex r = new Regex("[^A-Za-z0-9., ]");
+            if (r.IsMatch(input))
+            {
+                buttonUpdate.Enabled = false;
+                (sender as TextBox).BackColor = Color.Salmon;
+            }
+            else
+            {
+                buttonUpdate.Enabled = true;
+                (sender as TextBox).BackColor = Color.White;
+            }
         }
     }
 }
