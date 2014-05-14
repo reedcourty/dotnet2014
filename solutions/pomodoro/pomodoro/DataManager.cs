@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Data.SQLite;
 using System.IO;
 using System.Linq;
@@ -80,11 +81,24 @@ namespace pomodoro
                     conn.Open();
                     using (var cmd = conn.CreateCommand())
                     {
-                        cmd.CommandText = String.Format(@"INSERT INTO Entry (Timestamp, Description) VALUES ('{0}', '{1}')", timestamp.ToString("yyyy-MM-dd HH:mm:ss"), description);
+                        //cmd.CommandText = String.Format(@"INSERT INTO Entry (Timestamp, Description) VALUES ('{0}', '{1}')", timestamp.ToString("yyyy-MM-dd HH:mm:ss"), description);
+                        cmd.CommandText = @"INSERT INTO Entry (Timestamp, Description) VALUES (@Timestamp, @Description)";
+
+                        SQLiteParameter pTimestamp = new SQLiteParameter { ParameterName = "@Timestamp", Value = timestamp.ToString("yyyy-MM-dd HH:mm:ss") };
+                        cmd.Parameters.Add(pTimestamp);
+
+                        SQLiteParameter pDescription = new SQLiteParameter { ParameterName = "@Description", Value = description };
+                        cmd.Parameters.Add(pDescription);
+
                         cmd.CommandType = CommandType.Text;
                         cmd.ExecuteNonQuery();
 
-                        cmd.CommandText = String.Format(@"SELECT EntryID FROM Entry WHERE Timestamp = '{0}'", timestamp.ToString("yyyy-MM-dd HH:mm:ss"));
+                        //cmd.CommandText = String.Format(@"SELECT EntryID FROM Entry WHERE Timestamp = '{0}'", timestamp.ToString("yyyy-MM-dd HH:mm:ss"));
+                        cmd.CommandText = @"SELECT EntryID FROM Entry WHERE Timestamp = @Timestamp";
+
+                        pTimestamp = new SQLiteParameter { ParameterName = "@Timestamp", Value = timestamp.ToString("yyyy-MM-dd HH:mm:ss") };
+                        cmd.Parameters.Add(pTimestamp);
+                        
                         cmd.CommandType = CommandType.Text;
                         using (var reader = cmd.ExecuteReader())
                         {
@@ -119,7 +133,12 @@ namespace pomodoro
                     using (var cmd = conn.CreateCommand())
                     {
                         // Documentation: SQLite - DELETE http://www.sqlite.org/lang_delete.html
-                        cmd.CommandText = String.Format(@"DELETE FROM Entry WHERE EntryID = {0}", entryID);
+                        // cmd.CommandText = String.Format(@"DELETE FROM Entry WHERE EntryID = {0}", entryID);
+                        cmd.CommandText = @"DELETE FROM Entry WHERE EntryID = @EntryID";
+
+                        SQLiteParameter pEntryID = new SQLiteParameter { ParameterName = "@EntryID", Value = entryID };
+                        cmd.Parameters.Add(pEntryID);
+
                         cmd.CommandType = CommandType.Text;
                         cmd.ExecuteNonQuery();
                     }
@@ -147,7 +166,7 @@ namespace pomodoro
                     using (var cmd = conn.CreateCommand())
                     {
                         // Documentation: SQLite - SELECT http://www.sqlite.org/lang_select.html
-                        cmd.CommandText = String.Format(@"SELECT Name FROM Tag");
+                        cmd.CommandText = @"SELECT Name FROM Tag";
                         cmd.CommandType = CommandType.Text;
                         using (var reader = cmd.ExecuteReader())
                         {
@@ -182,7 +201,13 @@ namespace pomodoro
                     conn.Open();
                     using (var cmd = conn.CreateCommand())
                     {
-                        cmd.CommandText = String.Format(@"INSERT INTO Tag (Name) VALUES ('{0}')", tag);
+                        //cmd.CommandText = String.Format(@"INSERT INTO Tag (Name) VALUES ('{0}')", tag);
+                        cmd.CommandText = @"INSERT INTO Tag (Name) VALUES (@Tag)";
+                        
+                        
+                        SQLiteParameter pTag = new SQLiteParameter { ParameterName = "@Tag", Value = tag };
+                        cmd.Parameters.Add(pTag);
+
                         cmd.CommandType = CommandType.Text;
                         cmd.ExecuteNonQuery();
                     }
@@ -213,7 +238,15 @@ namespace pomodoro
                     {
                         foreach (var item in tags)
                         {
-                            cmd.CommandText = String.Format(@"INSERT INTO Entry_Tag (EntryID, TagID) VALUES ('{0}', (SELECT TagID FROM Tag WHERE Name = '{1}'))", newEntryID, item);
+                            //cmd.CommandText = String.Format(@"INSERT INTO Entry_Tag (EntryID, TagID) VALUES ('{0}', (SELECT TagID FROM Tag WHERE Name = '{1}'))", newEntryID, item);
+                            cmd.CommandText = @"INSERT INTO Entry_Tag (EntryID, TagID) VALUES (@NewEntryID, (SELECT TagID FROM Tag WHERE Name = @Item))";
+                            
+                            SQLiteParameter pNewEntryID = new SQLiteParameter { ParameterName = "@NewEntryID", Value = newEntryID };
+                            cmd.Parameters.Add(pNewEntryID);
+
+                            SQLiteParameter pItem = new SQLiteParameter { ParameterName = "@Item", Value = item };
+                            cmd.Parameters.Add(pItem);
+
                             cmd.CommandType = CommandType.Text;
                             cmd.ExecuteNonQuery();    
                         }
@@ -231,7 +264,7 @@ namespace pomodoro
             }
         }
 
-        public List<string> getTagsByEntry(string EntryID)
+        public List<string> getTagsByEntry(string entryID)
         {
             List<string> result = new List<string>();
 
@@ -244,7 +277,12 @@ namespace pomodoro
                     using (var cmd = conn.CreateCommand())
                     {
                         // Documentation: SQLite - SELECT http://www.sqlite.org/lang_select.html
-                        cmd.CommandText = String.Format(@" SELECT Name FROM Tag WHERE TagID IN (SELECT TagID FROM Entry_Tag WHERE Entry_Tag.EntryID = '{0}')", EntryID);
+                        //cmd.CommandText = String.Format(@"SELECT Name FROM Tag WHERE TagID IN (SELECT TagID FROM Entry_Tag WHERE Entry_Tag.EntryID = '{0}')", EntryID);
+                        cmd.CommandText = @"SELECT Name FROM Tag WHERE TagID IN (SELECT TagID FROM Entry_Tag WHERE Entry_Tag.EntryID = @EntryID)";
+                        
+                        SQLiteParameter pEntryID = new SQLiteParameter { ParameterName = "@EntryID", Value = entryID };
+                        cmd.Parameters.Add(pEntryID);
+                        
                         cmd.CommandType = CommandType.Text;
                         using (var reader = cmd.ExecuteReader())
                         {
@@ -280,7 +318,12 @@ namespace pomodoro
                     using (var cmd = conn.CreateCommand())
                     {
                         // Documentation: SQLite - DELETE http://www.sqlite.org/lang_delete.html
-                        cmd.CommandText = String.Format(@"DELETE FROM Entry_Tag WHERE EntryID = {0}", entryID);
+                        //cmd.CommandText = String.Format(@"DELETE FROM Entry_Tag WHERE EntryID = {0}", entryID);
+                        cmd.CommandText = @"DELETE FROM Entry_Tag WHERE EntryID = @EntryID";
+
+                        SQLiteParameter pEntryID = new SQLiteParameter { ParameterName = "@EntryID", Value = entryID };
+                        cmd.Parameters.Add(pEntryID);
+
                         cmd.CommandType = CommandType.Text;
                         cmd.ExecuteNonQuery();
                     }
@@ -307,7 +350,18 @@ namespace pomodoro
                     using (var cmd = conn.CreateCommand())
                     {
                         // Documentation: SQLite - UPDATE: http://www.sqlite.org/lang_update.html
-                        cmd.CommandText = String.Format(@"UPDATE Entry SET Description = '{0}' WHERE EntryID = {1} AND Description = '{2}'", newEntryDescription, entryID, oldEntryDescription);
+                        //cmd.CommandText = String.Format(@"UPDATE Entry SET Description = '{0}' WHERE EntryID = {1} AND Description = '{2}'", newEntryDescription, entryID, oldEntryDescription);
+                        cmd.CommandText = @"UPDATE Entry SET Description = @NewEntryDescription WHERE EntryID = @EntryID AND Description = @OldEntryDescription";
+
+                        SQLiteParameter pNewEntryDescription = new SQLiteParameter { ParameterName = "@NewEntryDescription", Value = newEntryDescription };
+                        cmd.Parameters.Add(pNewEntryDescription);
+
+                        SQLiteParameter pEntryID = new SQLiteParameter { ParameterName = "@EntryID", Value = entryID };
+                        cmd.Parameters.Add(pEntryID);
+                        
+                        SQLiteParameter pOldEntryDescription = new SQLiteParameter { ParameterName = "@OldEntryDescription", Value = oldEntryDescription };
+                        cmd.Parameters.Add(pOldEntryDescription);
+
                         cmd.CommandType = CommandType.Text;
                         cmd.ExecuteNonQuery();
                     }

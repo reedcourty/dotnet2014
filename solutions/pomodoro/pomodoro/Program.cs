@@ -22,7 +22,6 @@ namespace pomodoro
             tracer.PutEvent(TraceEventType.Information, 1, "Pomodoro has been started...");
 
             ConfigManager cm = new ConfigManager(tracer);
-            //cm.Init();
 
             DataManager dm = new DataManager { DB = cm.Configuration.DbFile};
             dm.createDBOrSkip();
