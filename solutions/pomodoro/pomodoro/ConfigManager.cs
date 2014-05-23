@@ -36,7 +36,7 @@ namespace pomodoro
     }
 
 
-    class ConfigManager
+    public class ConfigManager
     {
         private string configFile;
         public Tracer tracer;

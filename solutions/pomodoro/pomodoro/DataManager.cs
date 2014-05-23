@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Data.SQLite;
 using System.Diagnostics;
 using System.IO;
@@ -419,6 +420,186 @@ namespace pomodoro
             }
 
             this.addTagsToEntry(long.Parse(entryID), tags);
+        }
+
+        public void createMSSQLDBNoMatterWhat()
+        {
+            try
+            {
+                var connectionString = String.Format("Data Source=MITHRIEL-VM;Initial Catalog=master;Integrated Security=True");
+                using (var conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    using (var cmd = conn.CreateCommand())
+                    {
+                        cmd.CommandText = @"USE master;
+                                                                                                
+                                            IF exists (SELECT * FROM sysdatabases WHERE name = N'Pomodoro')
+	                                            DROP DATABASE Pomodoro
+
+                                            CREATE DATABASE Pomodoro;
+                                            ";
+                        cmd.CommandType = CommandType.Text;
+                        cmd.ExecuteNonQuery();
+
+                        // Documentation:
+                        // CREATE DATABASE (SQL Server Transact-SQL): http://msdn.microsoft.com/en-us/library/ms176061.aspx
+                        // nchar and nvarchar (Transact-SQL): http://msdn.microsoft.com/en-us/library/ms186939.aspx
+                        cmd.CommandText = @"USE Pomodoro;
+                                            
+                                            CREATE TABLE Tag (
+                                            	TagID int IDENTITY (1,1) NOT NULL,
+	                                            Name nvarchar(255) NOT NULL,
+	                                            CONSTRAINT PK_Tags PRIMARY KEY CLUSTERED 
+	                                            (
+		                                            TagID
+	                                            )
+                                            )
+                                            ";
+                        cmd.CommandType = CommandType.Text;
+                        cmd.ExecuteNonQuery();
+
+                        // Documentation:
+                        // datetime (Transact-SQL): http://msdn.microsoft.com/en-us/library/ms187819.aspx
+                        cmd.CommandText = @"USE Pomodoro;
+
+                                            CREATE TABLE Entry (
+	                                            EntryID int IDENTITY (1,1) NOT NULL,
+	                                            
+	                                            Timestamp datetime NOT NULL,
+	                                            Description nvarchar(4000) NOT NULL,
+	                                            CONSTRAINT PK_Entries PRIMARY KEY CLUSTERED 
+	                                            (
+		                                            EntryID
+	                                            )
+                                            )
+                                           ";
+                        cmd.CommandType = CommandType.Text;
+                        cmd.ExecuteNonQuery();
+
+                        cmd.CommandText = @"USE Pomodoro;
+
+                                            CREATE TABLE Entry_Tag (
+	                                            EntryID int REFERENCES Entry(EntryID),
+	                                            TagID int REFERENCES Tag(TagID),
+	                                            CONSTRAINT pk_Entry_Tag PRIMARY KEY (EntryID, TagID)
+                                            )
+                                            ";
+                        cmd.CommandType = CommandType.Text;
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (SqlException exception)
+            {
+                Console.WriteLine(String.Format("{0}: {1}", exception.Source, exception.Message));
+            }
+        }
+
+        public void migrateSQLiteToMSSQL()
+        {
+            try
+            {
+                var connectionString = String.Format("Data Source=MITHRIEL-VM;Initial Catalog=Pomodoro;Integrated Security=True");
+                using (var conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    using (var cmd = conn.CreateCommand())
+                    {
+                        cmd.CommandText = @"SET IDENTITY_INSERT dbo.Entry ON;";
+                        cmd.CommandType = CommandType.Text;
+
+                        // TODO: megigazítani: tracer.PutSQLQuery(cmd, 11);
+
+                        cmd.ExecuteNonQuery();
+
+                        foreach (var item in getEntries())
+                        {
+                            using (var insertcmd = conn.CreateCommand())
+                            {
+                                Console.WriteLine("{0}-|{1}|-{2}", item[0], item[1], item[2]);
+
+                                insertcmd.CommandText = @"INSERT INTO Entry (EntryId, Timestamp, Description) VALUES (@EntryID, CONVERT(datetime, @Timestamp, 20), @Description)";
+
+                                SqlParameter pEntryId = new SqlParameter { ParameterName = "@EntryId", Value = item[0] };
+                                insertcmd.Parameters.Add(pEntryId);
+
+                                SqlParameter pTimestamp = new SqlParameter { ParameterName = "@Timestamp", Value = item[1] };
+                                insertcmd.Parameters.Add(pTimestamp);
+
+                                SqlParameter pDescription = new SqlParameter { ParameterName = "@Description", Value = item[2] };
+                                insertcmd.Parameters.Add(pDescription);
+
+                                insertcmd.CommandType = CommandType.Text;
+
+                                // TODO: megigazítani: tracer.PutSQLQuery(insertcmd, 11);
+
+                                insertcmd.ExecuteNonQuery();
+                            }
+                        }
+
+                        cmd.CommandText = @"SET IDENTITY_INSERT dbo.Entry OFF;";
+                        cmd.CommandType = CommandType.Text;
+
+                        // TODO: megigazítani: tracer.PutSQLQuery(cmd, 11);
+
+                        cmd.ExecuteNonQuery();
+
+
+                    }
+                }
+            }
+            catch (SqlException exception)
+            {
+                Console.WriteLine(String.Format("{0}: {1}", exception.Source, exception.Message));
+            }
+        }
+
+        public List<List<string>> getEntries()
+        {
+            List<List<string>> result = new List<List<string>>();
+
+            try
+            {
+                var connectionString = String.Format("Data Source={0};Version=3;", DB);
+                using (var conn = new SQLiteConnection(connectionString))
+                {
+                    conn.Open();
+                    using (var cmd = conn.CreateCommand())
+                    {
+                        // Documentation: SQLite - SELECT http://www.sqlite.org/lang_select.html
+                        cmd.CommandText = @"SELECT EntryID, Timestamp, Description FROM Entry";
+
+                        cmd.CommandType = CommandType.Text;
+
+                        tracer.PutSQLQuery(cmd, 18);
+
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                List<string> temp = new List<string>();
+
+                                temp.Add(reader.GetInt64(0).ToString());
+                                temp.Add(reader["Timestamp"] as string);
+                                temp.Add(reader["Description"] as string);
+                                result.Add(temp);
+                            }
+
+                        }
+                    }
+                }
+            }
+            catch (System.IO.IOException exception)
+            {
+                Console.WriteLine(String.Format("{0}: {1}", exception.Source, exception.Message));
+            }
+            catch (System.Data.SQLite.SQLiteException exception)
+            {
+                Console.WriteLine(String.Format("{0}: {1}", exception.Source, exception.Message));
+            }
+
+            return result;
         }
     }
 }
