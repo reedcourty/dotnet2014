@@ -13,5 +13,10 @@ namespace pomodoro_webapp
         {
 
         }
+
+        protected void DetailsView1_ItemUpdated(object sender, DetailsViewUpdatedEventArgs e)
+        {
+            GridView1.DataBind();
+        }
     }
 }
