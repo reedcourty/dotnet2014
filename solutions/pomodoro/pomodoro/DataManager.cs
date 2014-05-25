@@ -545,6 +545,77 @@ namespace pomodoro
 
                         cmd.ExecuteNonQuery();
 
+                        cmd.CommandText = @"SET IDENTITY_INSERT dbo.Tag ON;";
+                        cmd.CommandType = CommandType.Text;
+
+                        // TODO: megigazítani: tracer.PutSQLQuery(cmd, 11);
+
+                        cmd.ExecuteNonQuery();
+
+                        foreach (var item in getTags())
+                        {
+                            using (var insertcmd = conn.CreateCommand())
+                            {
+                                Console.WriteLine("{0}-|{1}|", item[0], item[1]);
+
+                                insertcmd.CommandText = @"INSERT INTO Tag (TagID, Name) VALUES (@TagID, @Name)";
+
+                                SqlParameter pTagID = new SqlParameter { ParameterName = "@TagID", Value = item[0] };
+                                insertcmd.Parameters.Add(pTagID);
+
+                                SqlParameter pName = new SqlParameter { ParameterName = "@Name", Value = item[1] };
+                                insertcmd.Parameters.Add(pName);
+
+                                insertcmd.CommandType = CommandType.Text;
+
+                                // TODO: megigazítani: tracer.PutSQLQuery(insertcmd, 11);
+
+                                insertcmd.ExecuteNonQuery();
+                            }
+                        }
+
+                        cmd.CommandText = @"SET IDENTITY_INSERT dbo.Tag OFF;";
+                        cmd.CommandType = CommandType.Text;
+
+                        // TODO: megigazítani: tracer.PutSQLQuery(cmd, 11);
+
+                        cmd.ExecuteNonQuery();
+
+                        foreach (var item in getEntryTagTable())
+                        {
+                            using (var insertcmd = conn.CreateCommand())
+                            {
+                                Console.WriteLine("{0}-|{1}|", item.Item1, item.Item2);
+
+                                insertcmd.CommandText = @"INSERT INTO Entry_Tag (EntryID, TagID) VALUES (@EntryID, @TagID)";
+
+                                SqlParameter pEntryID = new SqlParameter { ParameterName = "@EntryID", Value = item.Item1 };
+                                insertcmd.Parameters.Add(pEntryID);
+
+                                SqlParameter pTagID = new SqlParameter { ParameterName = "@TagID", Value = item.Item2 };
+                                insertcmd.Parameters.Add(pTagID);
+
+                                insertcmd.CommandType = CommandType.Text;
+
+                                // TODO: megigazítani: tracer.PutSQLQuery(insertcmd, 11);
+
+                                try
+                                {
+                                    insertcmd.ExecuteNonQuery();
+                                }
+                                catch (SqlException exception)
+                                {
+                                    if (exception.Number == 547)
+                                    {
+                                        Console.WriteLine("skipping [{0}]", item);
+                                    }
+                                    else
+                                    {
+                                        throw;
+                                    }
+                                }
+                            }
+                        }
 
                     }
                 }
@@ -553,6 +624,51 @@ namespace pomodoro
             {
                 Console.WriteLine(String.Format("{0}: {1}", exception.Source, exception.Message));
             }
+        }
+
+        private List<List<string>> getTags()
+        {
+            List<List<string>> result = new List<List<string>>();
+
+            try
+            {
+                var connectionString = String.Format("Data Source={0};Version=3;", DB);
+                using (var conn = new SQLiteConnection(connectionString))
+                {
+                    conn.Open();
+                    using (var cmd = conn.CreateCommand())
+                    {
+                        cmd.CommandText = @"SELECT TagID, Name FROM Tag";
+
+                        cmd.CommandType = CommandType.Text;
+
+                        tracer.PutSQLQuery(cmd, 18);
+
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                List<string> temp = new List<string>();
+
+                                temp.Add(reader.GetInt64(0).ToString());
+                                temp.Add(reader["Name"] as string);
+                                result.Add(temp);
+                            }
+
+                        }
+                    }
+                }
+            }
+            catch (System.IO.IOException exception)
+            {
+                Console.WriteLine(String.Format("{0}: {1}", exception.Source, exception.Message));
+            }
+            catch (System.Data.SQLite.SQLiteException exception)
+            {
+                Console.WriteLine(String.Format("{0}: {1}", exception.Source, exception.Message));
+            }
+
+            return result;
         }
 
         public List<List<string>> getEntries()
@@ -584,6 +700,49 @@ namespace pomodoro
                                 temp.Add(reader["Timestamp"] as string);
                                 temp.Add(reader["Description"] as string);
                                 result.Add(temp);
+                            }
+
+                        }
+                    }
+                }
+            }
+            catch (System.IO.IOException exception)
+            {
+                Console.WriteLine(String.Format("{0}: {1}", exception.Source, exception.Message));
+            }
+            catch (System.Data.SQLite.SQLiteException exception)
+            {
+                Console.WriteLine(String.Format("{0}: {1}", exception.Source, exception.Message));
+            }
+
+            return result;
+        }
+
+        public List<Tuple<long, long>> getEntryTagTable()
+        {
+            List<Tuple<long, long>> result = new List<Tuple<long, long>>();
+
+            try
+            {
+                var connectionString = String.Format("Data Source={0};Version=3;", DB);
+                using (var conn = new SQLiteConnection(connectionString))
+                {
+                    conn.Open();
+                    using (var cmd = conn.CreateCommand())
+                    {
+                        cmd.CommandText = @"SELECT EntryID, TagID FROM Entry_Tag";
+
+                        cmd.CommandType = CommandType.Text;
+
+                        tracer.PutSQLQuery(cmd, 18);
+
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                //Console.WriteLine("{0}: {1}, {2}: {3}", reader.GetFieldType(0), reader.GetValue(0), reader.GetFieldType(1), reader.GetValue(1));
+                                Tuple<long, long> row = Tuple.Create(reader.GetInt64(0), reader.GetInt64(1));
+                                result.Add(row);
                             }
 
                         }
