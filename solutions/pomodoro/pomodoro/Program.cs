@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Globalization;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace pomodoro
@@ -29,6 +27,10 @@ namespace pomodoro
 
             ConfigManager cm = new ConfigManager(tracer);
 
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo(cm.Configuration.Language);
+
+            tracer.PutEvent(TraceEventType.Information, 1, String.Format("Language: {0}", cm.Configuration.Language));
+
             DataManager dm = new DataManager { DB = cm.Configuration.DbFile };
             dm.tracer = tracer;
 
@@ -36,7 +38,7 @@ namespace pomodoro
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainWindow(dm));
+            Application.Run(new MainWindow(dm, cm));
 
             tracer.Close();
         }  

@@ -30,6 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.Label entryIDLabel;
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LogWindow));
             System.Windows.Forms.Label timestampLabel;
             System.Windows.Forms.Label descriptionLabel;
             this.tLPMain = new System.Windows.Forms.TableLayoutPanel();
@@ -70,71 +71,37 @@
             // 
             // entryIDLabel
             // 
-            entryIDLabel.AutoSize = true;
-            entryIDLabel.Location = new System.Drawing.Point(3, 9);
+            resources.ApplyResources(entryIDLabel, "entryIDLabel");
             entryIDLabel.Name = "entryIDLabel";
-            entryIDLabel.Size = new System.Drawing.Size(48, 13);
-            entryIDLabel.TabIndex = 0;
-            entryIDLabel.Text = "Entry ID:";
             // 
             // timestampLabel
             // 
-            timestampLabel.AutoSize = true;
-            timestampLabel.Location = new System.Drawing.Point(146, 9);
+            resources.ApplyResources(timestampLabel, "timestampLabel");
             timestampLabel.Name = "timestampLabel";
-            timestampLabel.Size = new System.Drawing.Size(61, 13);
-            timestampLabel.TabIndex = 2;
-            timestampLabel.Text = "Timestamp:";
             // 
             // descriptionLabel
             // 
-            descriptionLabel.AutoSize = true;
-            descriptionLabel.Location = new System.Drawing.Point(3, 33);
+            resources.ApplyResources(descriptionLabel, "descriptionLabel");
             descriptionLabel.Name = "descriptionLabel";
-            descriptionLabel.Size = new System.Drawing.Size(63, 13);
-            descriptionLabel.TabIndex = 4;
-            descriptionLabel.Text = "Description:";
             // 
             // tLPMain
             // 
-            this.tLPMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tLPMain.ColumnCount = 1;
-            this.tLPMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            resources.ApplyResources(this.tLPMain, "tLPMain");
             this.tLPMain.Controls.Add(this.tLPEntryList, 0, 0);
             this.tLPMain.Controls.Add(this.tLPDetails, 0, 1);
-            this.tLPMain.Location = new System.Drawing.Point(12, 12);
             this.tLPMain.Name = "tLPMain";
-            this.tLPMain.RowCount = 2;
-            this.tLPMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tLPMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tLPMain.Size = new System.Drawing.Size(780, 438);
-            this.tLPMain.TabIndex = 0;
             // 
             // tLPEntryList
             // 
-            this.tLPEntryList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tLPEntryList.AutoScroll = true;
-            this.tLPEntryList.ColumnCount = 1;
-            this.tLPEntryList.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            resources.ApplyResources(this.tLPEntryList, "tLPEntryList");
             this.tLPEntryList.Controls.Add(this.entryDataGridView, 0, 0);
-            this.tLPEntryList.Location = new System.Drawing.Point(3, 3);
             this.tLPEntryList.Name = "tLPEntryList";
-            this.tLPEntryList.RowCount = 1;
-            this.tLPEntryList.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tLPEntryList.Size = new System.Drawing.Size(774, 213);
-            this.tLPEntryList.TabIndex = 0;
             // 
             // entryDataGridView
             // 
+            resources.ApplyResources(this.entryDataGridView, "entryDataGridView");
             this.entryDataGridView.AllowUserToAddRows = false;
             this.entryDataGridView.AllowUserToDeleteRows = false;
-            this.entryDataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.entryDataGridView.AutoGenerateColumns = false;
             this.entryDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.entryDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -143,35 +110,30 @@
             this.dataGridViewTextBoxColumn2,
             this.dataGridViewTextBoxColumn3});
             this.entryDataGridView.DataSource = this.entryBindingSource;
-            this.entryDataGridView.Location = new System.Drawing.Point(3, 3);
             this.entryDataGridView.Name = "entryDataGridView";
             this.entryDataGridView.ReadOnly = true;
             this.entryDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.entryDataGridView.Size = new System.Drawing.Size(768, 207);
-            this.entryDataGridView.TabIndex = 0;
             // 
             // dataGridViewTextBoxColumn1
             // 
             this.dataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.dataGridViewTextBoxColumn1.DataPropertyName = "EntryID";
-            this.dataGridViewTextBoxColumn1.HeaderText = "Entry ID";
+            resources.ApplyResources(this.dataGridViewTextBoxColumn1, "dataGridViewTextBoxColumn1");
             this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
             this.dataGridViewTextBoxColumn1.ReadOnly = true;
-            this.dataGridViewTextBoxColumn1.Width = 70;
             // 
             // dataGridViewTextBoxColumn2
             // 
             this.dataGridViewTextBoxColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.dataGridViewTextBoxColumn2.DataPropertyName = "Timestamp";
-            this.dataGridViewTextBoxColumn2.HeaderText = "Timestamp";
+            resources.ApplyResources(this.dataGridViewTextBoxColumn2, "dataGridViewTextBoxColumn2");
             this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
             this.dataGridViewTextBoxColumn2.ReadOnly = true;
-            this.dataGridViewTextBoxColumn2.Width = 83;
             // 
             // dataGridViewTextBoxColumn3
             // 
             this.dataGridViewTextBoxColumn3.DataPropertyName = "Description";
-            this.dataGridViewTextBoxColumn3.HeaderText = "Description";
+            resources.ApplyResources(this.dataGridViewTextBoxColumn3, "dataGridViewTextBoxColumn3");
             this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
             this.dataGridViewTextBoxColumn3.ReadOnly = true;
             // 
@@ -187,154 +149,90 @@
             // 
             // tLPDetails
             // 
-            this.tLPDetails.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tLPDetails.ColumnCount = 2;
-            this.tLPDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tLPDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            resources.ApplyResources(this.tLPDetails, "tLPDetails");
             this.tLPDetails.Controls.Add(this.panel1, 0, 0);
             this.tLPDetails.Controls.Add(this.panel2, 0, 1);
             this.tLPDetails.Controls.Add(this.tableLayoutPanel1, 1, 0);
             this.tLPDetails.Controls.Add(this.buttonExport, 1, 1);
-            this.tLPDetails.Location = new System.Drawing.Point(3, 222);
             this.tLPDetails.Name = "tLPDetails";
-            this.tLPDetails.RowCount = 2;
-            this.tLPDetails.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tLPDetails.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 63F));
-            this.tLPDetails.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tLPDetails.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tLPDetails.Size = new System.Drawing.Size(774, 213);
-            this.tLPDetails.TabIndex = 1;
             // 
             // panel1
             // 
+            resources.ApplyResources(this.panel1, "panel1");
             this.panel1.Controls.Add(entryIDLabel);
             this.panel1.Controls.Add(this.entryIDTextBox);
             this.panel1.Controls.Add(timestampLabel);
             this.panel1.Controls.Add(this.timestampTextBox);
             this.panel1.Controls.Add(descriptionLabel);
             this.panel1.Controls.Add(this.descriptionTextBox);
-            this.panel1.Location = new System.Drawing.Point(3, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(381, 141);
-            this.panel1.TabIndex = 0;
             // 
             // entryIDTextBox
             // 
+            resources.ApplyResources(this.entryIDTextBox, "entryIDTextBox");
             this.entryIDTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.entryBindingSource, "EntryID", true));
-            this.entryIDTextBox.Location = new System.Drawing.Point(72, 6);
             this.entryIDTextBox.Name = "entryIDTextBox";
             this.entryIDTextBox.ReadOnly = true;
-            this.entryIDTextBox.Size = new System.Drawing.Size(68, 20);
-            this.entryIDTextBox.TabIndex = 1;
             this.entryIDTextBox.TextChanged += new System.EventHandler(this.entryIDTextBox_TextChanged);
             // 
             // timestampTextBox
             // 
+            resources.ApplyResources(this.timestampTextBox, "timestampTextBox");
             this.timestampTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.entryBindingSource, "Timestamp", true));
-            this.timestampTextBox.Location = new System.Drawing.Point(213, 6);
             this.timestampTextBox.Name = "timestampTextBox";
             this.timestampTextBox.ReadOnly = true;
-            this.timestampTextBox.Size = new System.Drawing.Size(165, 20);
-            this.timestampTextBox.TabIndex = 3;
             // 
             // descriptionTextBox
             // 
+            resources.ApplyResources(this.descriptionTextBox, "descriptionTextBox");
             this.descriptionTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.entryBindingSource, "Description", true));
-            this.descriptionTextBox.Location = new System.Drawing.Point(72, 33);
-            this.descriptionTextBox.Multiline = true;
             this.descriptionTextBox.Name = "descriptionTextBox";
-            this.descriptionTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.descriptionTextBox.Size = new System.Drawing.Size(306, 105);
-            this.descriptionTextBox.TabIndex = 5;
             this.descriptionTextBox.Enter += new System.EventHandler(this.descriptionTextBox_Enter);
             // 
             // panel2
             // 
+            resources.ApplyResources(this.panel2, "panel2");
             this.panel2.Controls.Add(this.tBTags);
             this.panel2.Controls.Add(this.label1);
-            this.panel2.Location = new System.Drawing.Point(3, 153);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(381, 57);
-            this.panel2.TabIndex = 1;
             // 
             // tBTags
             // 
-            this.tBTags.Location = new System.Drawing.Point(72, 0);
-            this.tBTags.Multiline = true;
+            resources.ApplyResources(this.tBTags, "tBTags");
             this.tBTags.Name = "tBTags";
-            this.tBTags.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tBTags.Size = new System.Drawing.Size(306, 54);
-            this.tBTags.TabIndex = 1;
             this.tBTags.Enter += new System.EventHandler(this.tBTags_Enter);
             this.tBTags.Validating += new System.ComponentModel.CancelEventHandler(this.tBTags_Validating);
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 4);
+            resources.ApplyResources(this.label1, "label1");
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(34, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Tags:";
             // 
             // tableLayoutPanel1
             // 
-            this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tableLayoutPanel1.ColumnCount = 1;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            resources.ApplyResources(this.tableLayoutPanel1, "tableLayoutPanel1");
             this.tableLayoutPanel1.Controls.Add(this.buttonUpdate, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.buttonDelete, 0, 1);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(390, 3);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(381, 144);
-            this.tableLayoutPanel1.TabIndex = 2;
             // 
             // buttonUpdate
             // 
-            this.buttonUpdate.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonUpdate.Location = new System.Drawing.Point(100, 15);
-            this.buttonUpdate.Margin = new System.Windows.Forms.Padding(100, 15, 100, 15);
+            resources.ApplyResources(this.buttonUpdate, "buttonUpdate");
             this.buttonUpdate.Name = "buttonUpdate";
-            this.buttonUpdate.Size = new System.Drawing.Size(181, 42);
-            this.buttonUpdate.TabIndex = 0;
-            this.buttonUpdate.Text = "Update";
             this.buttonUpdate.UseVisualStyleBackColor = true;
             this.buttonUpdate.Click += new System.EventHandler(this.buttonUpdate_Click);
             // 
             // buttonDelete
             // 
-            this.buttonDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonDelete.Location = new System.Drawing.Point(100, 87);
-            this.buttonDelete.Margin = new System.Windows.Forms.Padding(100, 15, 100, 15);
+            resources.ApplyResources(this.buttonDelete, "buttonDelete");
             this.buttonDelete.Name = "buttonDelete";
-            this.buttonDelete.Size = new System.Drawing.Size(181, 42);
-            this.buttonDelete.TabIndex = 1;
-            this.buttonDelete.Text = "Delete";
             this.buttonDelete.UseVisualStyleBackColor = true;
             this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click);
             // 
             // buttonExport
             // 
-            this.buttonExport.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonExport.Location = new System.Drawing.Point(487, 165);
-            this.buttonExport.Margin = new System.Windows.Forms.Padding(100, 15, 100, 15);
+            resources.ApplyResources(this.buttonExport, "buttonExport");
             this.buttonExport.Name = "buttonExport";
-            this.buttonExport.Size = new System.Drawing.Size(187, 33);
-            this.buttonExport.TabIndex = 3;
-            this.buttonExport.Text = "Export";
             this.buttonExport.UseVisualStyleBackColor = true;
             this.buttonExport.Click += new System.EventHandler(this.buttonExport_Click);
             // 
@@ -352,14 +250,10 @@
             // 
             // LogWindow
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(804, 462);
             this.Controls.Add(this.tLPMain);
-            this.MaximumSize = new System.Drawing.Size(820, 501);
-            this.MinimumSize = new System.Drawing.Size(820, 501);
             this.Name = "LogWindow";
-            this.Text = "LogWindow";
             this.Load += new System.EventHandler(this.LogWindow_Load);
             this.tLPMain.ResumeLayout(false);
             this.tLPEntryList.ResumeLayout(false);
@@ -386,9 +280,6 @@
         private pomodoroDataSetTableAdapters.EntryTableAdapter entryTableAdapter;
         private pomodoroDataSetTableAdapters.TableAdapterManager tableAdapterManager;
         private System.Windows.Forms.DataGridView entryDataGridView;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.TextBox entryIDTextBox;
         private System.Windows.Forms.TextBox timestampTextBox;
@@ -400,5 +291,8 @@
         private System.Windows.Forms.Button buttonUpdate;
         private System.Windows.Forms.Button buttonDelete;
         private System.Windows.Forms.Button buttonExport;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
     }
 }

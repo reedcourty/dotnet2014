@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -21,6 +22,7 @@ namespace pomodoro
         // http://msdn.microsoft.com/en-us/library/8aye673k(v=vs.110).aspx
 
         public DataManager dataManager;
+        public ConfigManager configManager;
 
         private DateTime startCounterAt;
 
@@ -41,12 +43,13 @@ namespace pomodoro
         public delegate void Updater(string newValue);
         public Updater myUpdater;
 
-        public MainWindow(DataManager dataManager)
+        public MainWindow(DataManager dataManager, ConfigManager configManager)
         {
             InitializeComponent();
             myUpdater = new Updater(Update_maskedTextBoxCounter_Text);
 
             this.dataManager = dataManager;
+            this.configManager = configManager;
         }
 
         private void DisableEntryEditor()
@@ -176,6 +179,14 @@ namespace pomodoro
             {
                 bSave.Enabled = true;
                 (sender as TextBox).BackColor = Color.White;
+            }
+        }
+
+        private void buttonSettings_Click(object sender, EventArgs e)
+        {
+            using (var settingsWindow = new Settings(configManager))
+            {
+                settingsWindow.ShowDialog();
             }
         }
 

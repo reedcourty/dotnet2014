@@ -117,8 +117,35 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="16px-Preferences-system.svg" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\16px-Preferences-system.svg.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="maskedTextBoxCounter.Size" type="System.Drawing.Size, System.Drawing">
+    <value>105, 50</value>
+  </data>
+  <data name="bStart.Location" type="System.Drawing.Point, System.Drawing">
+    <value>129, 10</value>
+  </data>
+  <data name="bStart.Size" type="System.Drawing.Size, System.Drawing">
+    <value>120, 37</value>
+  </data>
+  <data name="bStart.Text" xml:space="preserve">
+    <value>Indítás</value>
+  </data>
+  <data name="lDescription.Text" xml:space="preserve">
+    <value>Leírás:</value>
+  </data>
+  <data name="bSave.Location" type="System.Drawing.Point, System.Drawing">
+    <value>284, 159</value>
+  </data>
+  <data name="bSave.Size" type="System.Drawing.Size, System.Drawing">
+    <value>116, 22</value>
+  </data>
+  <data name="bSave.Text" xml:space="preserve">
+    <value>Mentés</value>
+  </data>
+  <data name="lTags.Text" xml:space="preserve">
+    <value>Címkék:</value>
+  </data>
+  <data name="bLogs.Text" xml:space="preserve">
+    <value>Naplók</value>
   </data>
 </root>
