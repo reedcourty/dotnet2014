@@ -137,7 +137,7 @@ namespace pomodoro
 
         private void bLogs_Click(object sender, EventArgs e)
         {
-            var logWindow = new LogWindow(dataManager);
+            var logWindow = new LogWindow(dataManager, configManager);
             logWindow.Show();
         }
 

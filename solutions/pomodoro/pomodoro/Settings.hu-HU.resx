@@ -117,33 +117,33 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>37, 13</value>
-  </data>
   <data name="label1.Text" xml:space="preserve">
     <value>Nyelv:</value>
   </data>
-  <data name="comboBoxLanguage.Location" type="System.Drawing.Point, System.Drawing">
-    <value>99, 3</value>
-  </data>
-  <data name="comboBoxLanguage.Size" type="System.Drawing.Size, System.Drawing">
-    <value>158, 21</value>
-  </data>
-  <data name="buttonCancel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>99, 36</value>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="buttonCancel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>64, 30</value>
   </data>
   <data name="buttonCancel.Text" xml:space="preserve">
     <value>Mégse</value>
   </data>
   <data name="buttonSave.Location" type="System.Drawing.Point, System.Drawing">
-    <value>187, 36</value>
+    <value>183, 61</value>
   </data>
   <data name="buttonSave.Size" type="System.Drawing.Size, System.Drawing">
-    <value>70, 21</value>
+    <value>74, 30</value>
   </data>
   <data name="buttonSave.Text" xml:space="preserve">
     <value>Mentés</value>
+  </data>
+  <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>59, 13</value>
+  </data>
+  <data name="label2.Text" xml:space="preserve">
+    <value>Exportálás:</value>
+  </data>
+  <data name="checkBoxMSSQL.Location" type="System.Drawing.Point, System.Drawing">
+    <value>183, 31</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Beállítások</value>

@@ -18,6 +18,22 @@ namespace pomodoro
         private string dbFile;
         private int sessionLenghtInMin;
         private string language;
+        private bool exportToXLSX;
+        private bool exportToMSSQL;
+
+        public bool ExportToMSSQL
+        {
+            get { return exportToMSSQL; }
+            set { exportToMSSQL = value; }
+        }
+        
+
+        public bool ExportToXLSX
+        {
+            get { return exportToXLSX; }
+            set { exportToXLSX = value; }
+        }
+        
 
         public string Language
         {

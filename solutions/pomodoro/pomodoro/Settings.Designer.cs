@@ -34,6 +34,9 @@
             this.comboBoxLanguage = new System.Windows.Forms.ComboBox();
             this.buttonCancel = new System.Windows.Forms.Button();
             this.buttonSave = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.checkBoxXLSX = new System.Windows.Forms.CheckBox();
+            this.checkBoxMSSQL = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -42,8 +45,11 @@
             resources.ApplyResources(this.tableLayoutPanel1, "tableLayoutPanel1");
             this.tableLayoutPanel1.Controls.Add(this.label1, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.comboBoxLanguage, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.buttonCancel, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.buttonSave, 3, 1);
+            this.tableLayoutPanel1.Controls.Add(this.buttonCancel, 1, 2);
+            this.tableLayoutPanel1.Controls.Add(this.buttonSave, 3, 2);
+            this.tableLayoutPanel1.Controls.Add(this.label2, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.checkBoxXLSX, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.checkBoxMSSQL, 3, 1);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             // 
             // label1
@@ -76,6 +82,23 @@
             this.buttonSave.UseVisualStyleBackColor = true;
             this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
             // 
+            // label2
+            // 
+            resources.ApplyResources(this.label2, "label2");
+            this.label2.Name = "label2";
+            // 
+            // checkBoxXLSX
+            // 
+            resources.ApplyResources(this.checkBoxXLSX, "checkBoxXLSX");
+            this.checkBoxXLSX.Name = "checkBoxXLSX";
+            this.checkBoxXLSX.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxMSSQL
+            // 
+            resources.ApplyResources(this.checkBoxMSSQL, "checkBoxMSSQL");
+            this.checkBoxMSSQL.Name = "checkBoxMSSQL";
+            this.checkBoxMSSQL.UseVisualStyleBackColor = true;
+            // 
             // Settings
             // 
             resources.ApplyResources(this, "$this");
@@ -95,6 +118,9 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button buttonCancel;
         private System.Windows.Forms.Button buttonSave;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.CheckBox checkBoxXLSX;
+        private System.Windows.Forms.CheckBox checkBoxMSSQL;
 
     }
 }

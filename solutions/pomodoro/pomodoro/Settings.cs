@@ -19,6 +19,8 @@ namespace pomodoro
             InitializeComponent();
 
             comboBoxLanguage.SelectedItem = configManager.Configuration.getLanguage();
+            checkBoxXLSX.Checked = configManager.Configuration.ExportToXLSX;
+            checkBoxMSSQL.Checked = configManager.Configuration.ExportToMSSQL;             
 
             this.configManager = configManager;
         }
@@ -31,6 +33,8 @@ namespace pomodoro
         private void buttonSave_Click(object sender, EventArgs e)
         {
             configManager.Configuration.setLanguage(comboBoxLanguage.SelectedItem.ToString());
+            configManager.Configuration.ExportToMSSQL = checkBoxMSSQL.Checked;
+            configManager.Configuration.ExportToXLSX = checkBoxXLSX.Checked;
 
             configManager.SaveConfig();
 

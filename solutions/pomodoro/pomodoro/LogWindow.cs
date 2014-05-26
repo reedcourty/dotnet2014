@@ -14,16 +14,18 @@ namespace pomodoro
     public partial class LogWindow : Form
     {
         public DataManager dataManager;
+        public ConfigManager configManager;
 
         private bool dataFieldsAreSaved;
         private string oldEntryDescription;
         private string oldTags;
 
-        public LogWindow(DataManager dataManager)
+        public LogWindow(DataManager dataManager, ConfigManager configManager)
         {
             InitializeComponent();
 
             this.dataManager = dataManager;
+            this.configManager = configManager;
             this.dataFieldsAreSaved = false;
         }
 
@@ -105,30 +107,49 @@ namespace pomodoro
 
         private void buttonExport_Click(object sender, EventArgs e)
         {
-            List<List<string>> table = new List<List<string>>();
 
-            foreach (var row in entryDataGridView.Rows)
+            if (configManager.Configuration.ExportToMSSQL || configManager.Configuration.ExportToXLSX)
             {
-                string id = Convert.ToString((row as DataGridViewRow).Cells[0].Value);
-                string timestamp = (row as DataGridViewRow).Cells[1].Value as string;
-                string description = (row as DataGridViewRow).Cells[2].Value as string;
+                List<List<string>> table = new List<List<string>>();
 
-                List<string> rowAsStringList = new List<string>();
-                
-                rowAsStringList.Add(id);
-                rowAsStringList.Add(timestamp);
-                rowAsStringList.Add(description);
+                foreach (var row in entryDataGridView.Rows)
+                {
+                    string id = Convert.ToString((row as DataGridViewRow).Cells[0].Value);
+                    string timestamp = (row as DataGridViewRow).Cells[1].Value as string;
+                    string description = (row as DataGridViewRow).Cells[2].Value as string;
 
-                List<string> tags = dataManager.getTagsByEntry(id);
+                    List<string> rowAsStringList = new List<string>();
 
-                rowAsStringList.Add(String.Join(",", tags));
+                    rowAsStringList.Add(id);
+                    rowAsStringList.Add(timestamp);
+                    rowAsStringList.Add(description);
 
-                Console.WriteLine("rowAsStringList: {0}", rowAsStringList.Count);
+                    List<string> tags = dataManager.getTagsByEntry(id);
 
-                table.Add(rowAsStringList);
+                    rowAsStringList.Add(String.Join(",", tags));
+
+                    Console.WriteLine("rowAsStringList: {0}", rowAsStringList.Count);
+
+                    table.Add(rowAsStringList);
+                }
+
+                if (configManager.Configuration.ExportToXLSX) {
+                    ExportToXLS(table);
+                    MessageBox.Show("The log has been exported to XLSX.", "OK", MessageBoxButtons.OK);
+                }
+
+                if (configManager.Configuration.ExportToMSSQL)
+                {
+                    dataManager.createMSSQLDBNoMatterWhat();
+                    dataManager.migrateSQLiteToMSSQL();
+                    MessageBox.Show("The log has been exported to SQL Server.", "OK", MessageBoxButtons.OK);
+                }
             }
-
-            ExportToXLS(table);
+            else
+            {
+                MessageBox.Show("There is nothing to do. Go to the settings, and choose one of the export formats.", "OK", MessageBoxButtons.OK);
+            }
+            
         }
 
         private void ExportToXLS(List<List<string>> table)
