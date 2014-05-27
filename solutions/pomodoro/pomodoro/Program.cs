@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Threading;
 using System.Windows.Forms;
+using Microsoft.FSharp.Core;
 
 namespace pomodoro
 {
@@ -35,6 +36,8 @@ namespace pomodoro
             dm.tracer = tracer;
 
             dm.createDBOrSkip();
+
+            tracer.PutEvent(TraceEventType.Information, 42, String.Format("Number of tags in DB: {0}", Pomodoro.Stat.SQLDataConnection.SQLDataConnection.tag_num));
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
