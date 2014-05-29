@@ -6,6 +6,6 @@ open Pomodoro.Stat.SQLDataConnection
 [<EntryPoint>]
 let main argv = 
     printfn "%A" argv
-    SQLDataConnection.printer
+    printer
     ignore (System.Console.ReadLine())
     0 // return an integer exit code

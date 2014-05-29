@@ -47,7 +47,7 @@ namespace pomodoro
 
             dm.createDBOrSkip();
 
-            tracer.PutEvent(TraceEventType.Information, 42, String.Format("Number of tags in DB: {0}", Pomodoro.Stat.SQLDataConnection.SQLDataConnection.tag_num));
+            tracer.PutEvent(TraceEventType.Information, 42, String.Format("Number of tags in DB: {0}", Pomodoro.Stat.SQLDataConnection.tag_num));
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
