@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Threading;
 using System.Windows.Forms;
 using Microsoft.FSharp.Core;
+using System.Runtime.InteropServices;
 
 namespace pomodoro
 {
@@ -12,9 +13,18 @@ namespace pomodoro
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
+        /// 
+
+        [DllImport("ntdll.dll", SetLastError = true)]
+        public static extern uint NtQuerySystemTime(out long SystemTime);
+
         [STAThread]
         static void Main()
         {
+
+            long t;
+            NtQuerySystemTime(out t);
+
             // TODO: Performance Counters
             //      http://msdn.microsoft.com/en-us/library/vstudio/system.diagnostics.performancecounter
             //      http://msdn.microsoft.com/en-us/library/w8f5kw2e(v=vs.110).aspx
@@ -23,8 +33,8 @@ namespace pomodoro
 
             // Init:
             Tracer tracer = new Tracer();
-            
-            tracer.PutEvent(TraceEventType.Information, 1, "Pomodoro has been started...");
+
+            tracer.PutEvent(TraceEventType.Information, 1, String.Format("Pomodoro has been started at {0}...", DateTime.FromFileTime(t).ToString()));
 
             ConfigManager cm = new ConfigManager(tracer);
 
