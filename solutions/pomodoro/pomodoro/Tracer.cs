@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace pomodoro
 {
@@ -36,6 +32,18 @@ namespace pomodoro
         public void PutEvent(TraceEventType eventType, int id, string message)
         {
             ts.TraceEvent(eventType, id, message);
+            ts.Flush();
+        }
+
+        public void putInfo(int id, string message)
+        {
+            ts.TraceEvent(TraceEventType.Information, id, message);
+            ts.Flush();
+        }
+
+        public void putError(int id, string message)
+        {
+            ts.TraceEvent(TraceEventType.Error, id, message);
             ts.Flush();
         }
 

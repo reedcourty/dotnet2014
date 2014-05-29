@@ -110,7 +110,6 @@ namespace pomodoro
             Config result = new Config();
             try
             {
-
                 using (FileStream fs = new FileStream(this.ConfigFile, FileMode.Open))
                 {
                     XmlSerializer xs = new XmlSerializer(typeof(Config));
@@ -119,7 +118,7 @@ namespace pomodoro
             }
             catch (System.IO.IOException exception)
             {
-                Console.WriteLine("{0}, {1}", exception.Source, exception.Message);
+                tracer.putError(354, String.Format("{0}, {1}", exception.Source, exception.Message));
             }
 
             configuration = result;
